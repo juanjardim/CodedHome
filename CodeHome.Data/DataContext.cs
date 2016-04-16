@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CodedHome.Model;
+using CodeHome.Data.Configuration;
 
 namespace CodeHome.Data
 {
@@ -19,12 +15,15 @@ namespace CodeHome.Data
         {
             get
             {
-                if (ConfigurationManager.AppSettings["ConnectionStringName"] != null)
-                {
-                    return ConfigurationManager.AppSettings["ConnectionStringName"];
-                }
-                return "DefaultConnection";
+                return ConfigurationManager.AppSettings["ConnectionStringName"] ?? "DefaultConnection";
             }
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Configurations.Add(new HomeConfiguration());
+            modelBuilder.Configurations.Add(new UserConfiguration());
+            //base.OnModelCreating(modelBuilder);
         }
     }
 }
