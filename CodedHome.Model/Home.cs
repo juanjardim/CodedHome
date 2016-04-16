@@ -2,7 +2,7 @@
 
 namespace CodedHome.Model
 {
-    public class Home
+    public class Home : IAuditInfo
     {
         public int Id { get; set; }
         public string StreetAddress { get; set; }
